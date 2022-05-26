@@ -9,9 +9,6 @@ RUN apt-get autoclean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-#RUN pip3 install jupyterlab
-#RUN pip install --user numpy scipy matplotlib pandas sympy nose seaborn
-
 RUN mkdir -p /home/repo
 
 WORKDIR /home/repo            
