@@ -5,3 +5,4 @@ sleep 5
 fluxbox&
 touch /root/.Xauthority
 x11vnc -display :1 -nopw  -xkb -ncache 10 -ncache_cr -forever
+source env/bin/activate
