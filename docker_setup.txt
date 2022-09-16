@@ -2,4 +2,5 @@ sudo docker run --name some-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSW
 
 sudo docker run --name iroha -d -p 50051:50051 -v $(pwd)/iroha/example:/opt/iroha_data -v blockstore:/tmp/block_store --network=iroha-network -e KEY='node0' hyperledger/iroha:latest
 
+#must attach all containers to the same network
 sudo docker run -p 200.17.87.161:5900:5900 --network=iroha-network iroha-flask
