@@ -28,7 +28,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip install -r requirements.txt
 
 # Run the application:
-CMD ["python3", "main_sample.py"]
+CMD ["python", "main_sample.py"]
 # --------
 
 COPY startup /usr/local/bin/
