@@ -1,5 +1,4 @@
 # Dockerfile
-# Geth and tools
 
 FROM bitnami/minideb:bullseye
 
@@ -8,9 +7,6 @@ RUN apt-get clean && apt-get update && apt-get install -y gnupg wget x11vnc dbus
 RUN apt-get autoclean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
-
-#RUN pip3 install jupyterlab
-#RUN pip install --user numpy scipy matplotlib pandas sympy nose seaborn
 
 RUN mkdir -p /home/repo
 
@@ -24,16 +20,12 @@ RUN pip3 install virtualenv
 
 RUN python3 -m venv env
 
-#COPY env /usr/local/bin/
+RUN source env/bin/activate
 
-#CMD ["bash","env"]
+RUN pip3 install -r requirements.txt
 
 COPY startup /usr/local/bin/
 
 CMD ["bash","startup"]
-
-RUN env/bin/pip3 install -r requirements.txt
-
-#RUN lxterminal
 
 EXPOSE 5900
