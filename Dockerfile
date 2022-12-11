@@ -18,11 +18,18 @@ WORKDIR /home/repo/iroha_python_flask
 
 RUN pip3 install virtualenv
 
-RUN python3 -m venv env
 
-RUN source env/bin/activate
+# ---------
+ENV VIRTUAL_ENV=/home/repo/iroha_python_flask/env
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip3 install -r requirements.txt
+# Install dependencies:
+RUN pip install -r requirements.txt
+
+# Run the application:
+CMD ["python3", "main_sample.py"]
+# --------
 
 COPY startup /usr/local/bin/
 
