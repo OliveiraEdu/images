@@ -24,7 +24,7 @@ RUN wget -q https://raw.githubusercontent.com/marcopaganini/gnome-cedilla-fix/ma
 RUN chmod 755 fix-cedilla
 RUN ./fix-cedilla
 
-RUN sudo apt-get install libssl-dev
+RUN apt-get install libssl-dev
 
 RUN mkdir -p ~/Git
 RUN cd ~/Git/
