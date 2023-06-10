@@ -15,14 +15,11 @@ RUN apt-get autoclean && \
 #RUN mkhomedir_helper user1
 #RUN chsh -s /bin/bash user1
 
-RUN useradd -m user1 && echo "user1:user1" | chpasswd && adduser user1 sudo
-USER user1
-
-RUN mkdir -p ~/downloads
-RUN cd ~/downloads/
-RUN wget -q https://raw.githubusercontent.com/marcopaganini/gnome-cedilla-fix/master/fix-cedilla -O fix-cedilla
-RUN chmod 755 fix-cedilla
-RUN ./fix-cedilla
+#RUN mkdir -p ~/downloads
+#RUN cd ~/downloads/
+#RUN wget -q https://raw.githubusercontent.com/marcopaganini/gnome-cedilla-fix/master/fix-cedilla -O fix-cedilla
+#RUN chmod 755 fix-cedilla
+#RUN ./fix-cedilla
 
 RUN apt-get install libssl-dev
 
@@ -43,6 +40,10 @@ RUN pip install ./target/wheels/iroha_python-*.whl
 RUN cp -vfr ~/Git/iroha/configs/client_cli/config.json example/config.json
 
 COPY startup /usr/local/bin/
+
+RUN useradd -m user1 && echo "user1:user1" | chpasswd && adduser user1 sudo
+USER user1
+
 
 CMD ["bash","startup"]
 
