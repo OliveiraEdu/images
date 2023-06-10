@@ -1,0 +1,46 @@
+# Dockerfile
+
+FROM bitnami/minideb:bullseye
+
+RUN apt-get clean && apt-get update && apt-get install -y gnupg wget x11vnc dbus-x11 unzip xvfb fluxbox net-tools nano curl lxterminal firefox-esr python3 python3-pip thunar geany midori git python3-venv
+
+RUN apt-get autoclean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd user1
+RUN passwd user1
+RUN adduser user1  sudo
+RUN su - user1
+RUN mkhomedir_helper user1
+RUN chsh -s /bin/bash user1
+
+RUN mkdir -p ~/downloads
+RUN cd ~/downloads/
+RUN wget -q https://raw.githubusercontent.com/marcopaganini/gnome-cedilla-fix/master/fix-cedilla -O fix-cedilla
+RUN chmod 755 fix-cedilla
+RUN ./fix-cedilla
+
+RUN sudo apt-get install libssl-dev
+
+RUN mkdir -p ~/Git
+RUN cd ~/Git/
+RUN git clone https://github.com/hyperledger/iroha.git --branch iroha2-stable
+RUN git clone https://github.com/hyperledger/iroha-python/ --branch iroha2
+
+RUN cd ~/Git/iroha
+RUN cargo build -p iroha_client_cli
+
+RUN cd ~/Git/
+RUN cd iroha-python
+RUN pip install maturin
+RUN maturin build
+
+RUN pip install ./target/wheels/iroha_python-*.whl
+RUN cp -vfr ~/Git/iroha/configs/client_cli/config.json example/config.json
+
+COPY startup /usr/local/bin/
+
+CMD ["bash","startup"]
+
+EXPOSE 5900
