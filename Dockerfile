@@ -33,8 +33,8 @@ RUN git clone https://github.com/hyperledger/iroha.git --branch iroha2-stable
 RUN git clone https://github.com/OliveiraEdu/iroha2_python
 
 
-
-
+COPY startup /usr/local/bin/
+COPY hosts /etc
 
 CMD ["bash","startup"]
 
